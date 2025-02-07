@@ -2,22 +2,17 @@ import java.util.Scanner;
 
 public class Duke {
 
-    //new class : task for store name and done or not
-    private static class Task {
+    private static abstract class Task {
         String description;
         boolean isDone;
 
-        Task(String name) {
-            this.description = name;
+        Task(String description) {
+            this.description = description;
             this.isDone = false;
         }
 
         String getStatus() {
-            if (isDone) {
-                return "[X]";
-            } else {
-                return "[ ]";
-            }
+            return (isDone ? "[X]" : "[ ]");
         }
 
         void markDone() {
@@ -26,6 +21,51 @@ public class Duke {
 
         void markNotDone() {
             this.isDone = false;
+        }
+
+        @Override
+        public String toString() {
+            return getStatus() + " " + description;
+        }
+    }
+
+    private static class Todo extends Task {
+        Todo(String description) {
+            super(description);
+        }
+
+        @Override
+        public String toString() {
+            return "[T]" + super.toString();
+        }
+    }
+
+    private static class Deadline extends Task {
+        String by;
+
+        Deadline(String description, String by) {
+            super(description);
+            this.by = by;
+        }
+
+        @Override
+        public String toString() {
+            return "[D]" + super.toString() + " (by: " + by + ")";
+        }
+    }
+
+    private static class Event extends Task {
+        String from, to;
+
+        Event(String description, String from, String to) {
+            super(description);
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        public String toString() {
+            return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
         }
     }
 
@@ -38,11 +78,11 @@ public class Duke {
         System.out.println("____________________________________________________________");
     }
 
-    private static void addToList(String input) {
+    private static void addToList(Task task) {
         if (listCount < list.length) {
-            list[listCount] = new Task(input);
+            list[listCount] = task;
             listCount++;
-            printIt("added: " + input);
+            printIt("Got it. I've added this task:\n  " + task + "\nNow you have " + listCount + " tasks in the list.");
         } else {
             printIt("Task list is full!");
         }
@@ -52,39 +92,9 @@ public class Duke {
         System.out.println("____________________________________________________________");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < listCount; i++) {
-            System.out.println((i + 1) + "." + list[i].getStatus() + " " + list[i].description);
+            System.out.println((i + 1) + ". " + list[i]);
         }
         System.out.println("____________________________________________________________");
-    }
-
-    private static void markTaskAsDone(int index) {
-        if (index >= 0 && index < listCount) {
-            list[index].markDone();
-            printIt("Nice! I've marked this task as done:\n  " + list[index].getStatus() + " " + list[index].description);
-        } else {
-            printIt("Invalid!");
-        }
-    }
-
-    private static void markTaskAsNotDone(int index) {
-        if (index >= 0 && index < listCount) {
-            list[index].markNotDone();
-            printIt("OK, I've marked this task as not done yet:\n  " + list[index].getStatus() + " " + list[index].description);
-        } else {
-            printIt("Invalid!");
-        }
-    }
-
-    private static boolean isValidNumber(String str) {
-        if (str.isEmpty()) {
-            return false;
-        }
-        for (char c : str.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public static void main(String[] args) {
@@ -105,30 +115,27 @@ public class Duke {
                 break;
             } else if (input.equalsIgnoreCase("list")) {
                 printList();
-            } else if (input.length() > 5 && input.substring(0, 5).equals("mark ")) {
-                String numberPart = input.substring(5);
-                if (isValidNumber(numberPart)) {
-                    int index = Integer.parseInt(numberPart) - 1;
-                    markTaskAsDone(index);
+            } else if (input.startsWith("todo ")) {
+                addToList(new Todo(input.substring(5)));
+            } else if (input.startsWith("deadline ")) {
+                String[] parts = input.substring(9).split(" /by ", 2);
+                if (parts.length == 2) {
+                    addToList(new Deadline(parts[0], parts[1]));
                 } else {
-                    printIt("Invalid task number!");
+                    printIt("Invalid deadline format!");
                 }
-            } else if (input.length() > 7 && input.substring(0, 7).equals("unmark ")) {
-                String numberPart = input.substring(7);
-                if (isValidNumber(numberPart)) {
-                    int index = Integer.parseInt(numberPart) - 1;
-                    markTaskAsNotDone(index);
+            } else if (input.startsWith("event ")) {
+                String[] parts = input.substring(6).split(" /from | /to ", 3);
+                if (parts.length == 3) {
+                    addToList(new Event(parts[0], parts[1], parts[2]));
                 } else {
-                    printIt("Invalid!");
+                    printIt("Invalid event format!");
                 }
             } else {
-                addToList(input);
+                printIt("Invalid command!");
             }
         }
 
         scanner.close();
     }
-
 }
-
-
