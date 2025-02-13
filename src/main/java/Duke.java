@@ -1,141 +1,77 @@
-import java.util.Scanner;
-
 public class Duke {
+    private TaskList taskList;
+    private Ui ui;
 
-    private static abstract class Task {
-        String description;
-        boolean isDone;
-
-        Task(String description) {
-            this.description = description;
-            this.isDone = false;
-        }
-
-        String getStatus() {
-            return (isDone ? "[X]" : "[ ]");
-        }
-
-        void markDone() {
-            this.isDone = true;
-        }
-
-        void markNotDone() {
-            this.isDone = false;
-        }
-
-        @Override
-        public String toString() {
-            return getStatus() + " " + description;
-        }
+    public Duke() {
+        this.taskList = new TaskList();
+        this.ui = new Ui();
     }
 
-    private static class Todo extends Task {
-        Todo(String description) {
-            super(description);
+    public void run() {
+        ui.showWelcome();
+        while (true) {
+            try {
+                String input = ui.readCommand();
+                if (input.equalsIgnoreCase("bye")) {
+                    ui.showGoodbye();
+                    break;
+                } else if (input.equalsIgnoreCase("list")) {
+                    taskList.printList();
+                } else if (input.startsWith("todo")) {
+                    handleTodo(input);
+                } else if (input.startsWith("deadline")) {
+                    handleDeadline(input);
+                } else if (input.startsWith("event")) {
+                    handleEvent(input);
+                } else {
+                    throw new DukeException("Error: Unknown command! Please enter a valid command.");
+                }
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            }
         }
-
-        @Override
-        public String toString() {
-            return "[T]" + super.toString();
-        }
+        ui.close();
     }
 
-    private static class Deadline extends Task {
-        String by;
-
-        Deadline(String description, String by) {
-            super(description);
-            this.by = by;
+    private void handleTodo(String input) throws DukeException {
+        String description = input.substring("todo".length()).trim();
+        if (description.isEmpty()) {
+            throw new DukeException("Error: The description of a todo cannot be empty!");
         }
-
-        @Override
-        public String toString() {
-            return "[D]" + super.toString() + " (by: " + by + ")";
-        }
+        Task task = new Todo(description);
+        taskList.addTask(task);
+        ui.showTaskAdded(task, taskList.getTaskCount());
     }
 
-    private static class Event extends Task {
-        String from, to;
-
-        Event(String description, String from, String to) {
-            super(description);
-            this.from = from;
-            this.to = to;
+    private void handleDeadline(String input) throws DukeException {
+        String rest = input.substring("deadline".length()).trim();
+        if (rest.isEmpty()) {
+            throw new DukeException("Error: The description and deadline of a deadline task cannot be empty!");
         }
-
-        @Override
-        public String toString() {
-            return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        String[] parts = rest.split(" /by ", 2);
+        if (parts.length < 2 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty()) {
+            throw new DukeException("Error: Incorrect deadline format! Use: deadline <description> /by <due date>");
         }
+        Task task = new Deadline(parts[0].trim(), parts[1].trim());
+        taskList.addTask(task);
+        ui.showTaskAdded(task, taskList.getTaskCount());
     }
 
-    private static Task[] list = new Task[100];
-    private static int listCount = 0;
-
-    private static void printIt(String message) {
-        System.out.println("____________________________________________________________");
-        System.out.println(message);
-        System.out.println("____________________________________________________________");
-    }
-
-    private static void addToList(Task task) {
-        if (listCount < list.length) {
-            list[listCount] = task;
-            listCount++;
-            printIt("Got it. I've added this task:\n  " + task + "\nNow you have " + listCount + " tasks in the list.");
-        } else {
-            printIt("Task list is full!");
+    private void handleEvent(String input) throws DukeException {
+        String rest = input.substring("event".length()).trim();
+        if (rest.isEmpty()) {
+            throw new DukeException("Error: The description and time of an event cannot be empty!");
         }
-    }
-
-    private static void printList() {
-        System.out.println("____________________________________________________________");
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < listCount; i++) {
-            System.out.println((i + 1) + ". " + list[i]);
+        String[] parts = rest.split(" /from | /to ", 3);
+        if (parts.length < 3 || parts[0].trim().isEmpty() || parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
+            throw new DukeException("Error: Incorrect event format! Use: event <description> /from <start time> /to <end time>");
         }
-        System.out.println("____________________________________________________________");
+        Task task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+        taskList.addTask(task);
+        ui.showTaskAdded(task, taskList.getTaskCount());
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm DeepSeek.");
-        System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
-
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equalsIgnoreCase("bye")) {
-                System.out.println("____________________________________________________________");
-                System.out.println("Bye. Hope to see you again soon!");
-                System.out.println("____________________________________________________________");
-                break;
-            } else if (input.equalsIgnoreCase("list")) {
-                printList();
-            } else if (input.startsWith("todo ")) {
-                addToList(new Todo(input.substring(5)));
-            } else if (input.startsWith("deadline ")) {
-                String[] parts = input.substring(9).split(" /by ", 2);
-                if (parts.length == 2) {
-                    addToList(new Deadline(parts[0], parts[1]));
-                } else {
-                    printIt("Invalid deadline format!");
-                }
-            } else if (input.startsWith("event ")) {
-                String[] parts = input.substring(6).split(" /from | /to ", 3);
-                if (parts.length == 3) {
-                    addToList(new Event(parts[0], parts[1], parts[2]));
-                } else {
-                    printIt("Invalid event format!");
-                }
-            } else {
-                printIt("Invalid command!");
-            }
-        }
-
-        scanner.close();
+        new Duke().run();
     }
 }
