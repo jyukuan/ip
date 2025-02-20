@@ -16,7 +16,7 @@ public class Ui {
         System.out.println("Hello! I'm DeepSeek.");
         System.out.println("How can I assist you today?");
         System.out.println("____________________________________________________________");
-    }
+    }   
 
     public void showGoodbye() {
         System.out.println("____________________________________________________________");
