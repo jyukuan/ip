@@ -25,7 +25,7 @@ public abstract class Task {
     }
 }
 
-class Todo extends Task {
+ class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
@@ -36,7 +36,7 @@ class Todo extends Task {
     }
 }
 
-class Deadline extends Task {
+ class Deadline extends Task {
     private String by;
 
     public Deadline(String description, String by) {
@@ -50,7 +50,7 @@ class Deadline extends Task {
     }
 }
 
-class Event extends Task {
+ class Event extends Task {
     private String from;
     private String to;
 
