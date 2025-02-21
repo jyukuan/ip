@@ -23,6 +23,8 @@ public class Duke {
                     handleDeadline(input);
                 } else if (input.startsWith("event")) {
                     handleEvent(input);
+                } else if (input.startsWith("delete")) {
+                    handleDelete(input);
                 } else {
                     throw new DukeException("Error: Unknown command! Please enter a valid command.");
                 }
@@ -31,6 +33,22 @@ public class Duke {
             }
         }
         ui.close();
+    }
+
+    // new logic for delete
+    private void handleDelete(String input) throws DukeException {
+        String indexStr = input.substring("delete".length()).trim();
+        if (indexStr.isEmpty()) {
+            throw new DukeException("Error: Please specify a task index to delete!");
+        }
+        try {
+            int index = Integer.parseInt(indexStr) - 1; // input starts from 1 -> convert to 0
+            Task deletedTask = taskList.getTask(index);
+            taskList.deleteTask(index);
+            ui.showTaskDeleted(deletedTask, taskList.getTaskCount());
+        } catch (NumberFormatException e) {
+            throw new DukeException("Error: Invalid task index! Please enter a number.");
+        }
     }
 
     private void handleTodo(String input) throws DukeException {
