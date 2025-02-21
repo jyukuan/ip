@@ -23,8 +23,14 @@ public class Duke {
                     handleDeadline(input);
                 } else if (input.startsWith("event")) {
                     handleEvent(input);
+                } else if (input.startsWith("delete")) {
+                    handleDelete(input);
+                } else if (input.startsWith("mark")) {
+                    handleMark(input, true);
+                } else if (input.startsWith("unmark")) {
+                    handleMark(input, false);
                 } else {
-                    throw new DukeException("Error: Unknown command! Please enter a valid command.");
+                    throw new DukeException("未知命令");
                 }
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
@@ -69,6 +75,42 @@ public class Duke {
         Task task = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
         taskList.addTask(task);
         ui.showTaskAdded(task, taskList.getTaskCount());
+    }
+
+    private void handleMark(String input, boolean isDone) throws DukeException {
+        String indexStr = input.substring(isDone ? "mark".length() : "unmark".length()).trim();
+        try {
+            int index = Integer.parseInt(indexStr) - 1;
+            Task task = taskList.getTask(index);
+            if (isDone) {
+                task.markDone();
+            } else {
+                task.markNotDone();
+            }
+            taskList.saveTasks();
+            ui.showMarkStatus(task, isDone);
+        } catch (NumberFormatException e) {
+            throw new DukeException("Undefined task Index");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("Task index does not exist");
+        }
+    }
+
+    private void handleDelete(String input) throws DukeException {
+        String indexStr = input.substring("delete".length()).trim();
+        if (indexStr.isEmpty()) {
+            throw new DukeException("Error! Please input the delete index!");
+        }
+        try {
+            int index = Integer.parseInt(indexStr) - 1; // 用户输入从1开始，转换为0-based索引
+            Task deletedTask = taskList.getTask(index);
+            taskList.deleteTask(index);
+            ui.showTaskDeleted(deletedTask, taskList.getTaskCount());
+        } catch (NumberFormatException e) {
+            throw new DukeException("Error! Invalid Index!");
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("Error! Index does not exist!");
+        }
     }
 
     public static void main(String[] args) {

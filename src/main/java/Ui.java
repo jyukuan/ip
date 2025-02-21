@@ -36,6 +36,21 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
+    public void showTaskDeleted(Task task, int taskCount) {
+        System.out.println("____________________________________________________________");
+        System.out.println("Already to delete file:");
+        System.out.println("  " + task);
+        System.out.println("Current number of file: " + taskCount);
+        System.out.println("____________________________________________________________");
+    }
+
+    public void showMarkStatus(Task task, boolean isDone) {
+        System.out.println("____________________________________________________________");
+        System.out.println("The task mark as" + (isDone ? "done" : "not done") + ":");
+        System.out.println("  " + task);
+        System.out.println("____________________________________________________________");
+    }
+
     public void close() {
         scanner.close();
     }
