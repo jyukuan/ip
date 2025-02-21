@@ -30,7 +30,7 @@ public class Duke {
                 } else if (input.startsWith("unmark")) {
                     handleMark(input, false);
                 } else {
-                    throw new DukeException("未知命令");
+                    throw new DukeException("Unknown Command");
                 }
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
@@ -102,7 +102,7 @@ public class Duke {
             throw new DukeException("Error! Please input the delete index!");
         }
         try {
-            int index = Integer.parseInt(indexStr) - 1; // 用户输入从1开始，转换为0-based索引
+            int index = Integer.parseInt(indexStr) - 1;
             Task deletedTask = taskList.getTask(index);
             taskList.deleteTask(index);
             ui.showTaskDeleted(deletedTask, taskList.getTaskCount());

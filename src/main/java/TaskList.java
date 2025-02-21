@@ -91,10 +91,13 @@ public class TaskList {
 
     public void printList() {
         System.out.println("____________________________________________________________");
-
-        System.out.println("Current Tasklist:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+        if (tasks.isEmpty()) {
+            System.out.println("The task list is empty");
+        } else {
+            System.out.println("Current Task list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println((i + 1) + ". " + tasks.get(i));
+            }
         }
         System.out.println("____________________________________________________________");
     }
