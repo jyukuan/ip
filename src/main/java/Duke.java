@@ -41,6 +41,9 @@ public class Duke {
     }
 
 
-    //branch-A-Assertions
+    // exercise 1
+    // exercise 2
+
+
 
 }
