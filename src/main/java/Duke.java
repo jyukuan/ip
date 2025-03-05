@@ -40,4 +40,5 @@ public class Duke {
         new Duke("data/tasks.txt").run();
     }
     // exercise 1
+    // exercise 2
 }
