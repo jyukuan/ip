@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException, IOException;
@@ -72,5 +73,19 @@ class MarkCommand extends Command {
         }
         ui.showMarkStatus(task, isDone);
         storage.save(tasks.getTasks());
+    }
+}
+
+class FindCommand extends Command {
+    private final String keyword;
+
+    public FindCommand(String keyword) {
+        this.keyword = keyword;
+    }
+
+    @Override
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
+        List<Task> matchingTasks = tasks.findTasks(keyword);
+        ui.showMatchingTasks(matchingTasks);
     }
 }

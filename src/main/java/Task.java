@@ -61,9 +61,48 @@ public abstract class Task {
             throw new DukeException("Unknown task type in file");
         }
     }
+
+    public String getDescription() {
+        return description;
+    }
 }
 
-class Event extends Task {
+ class Todo extends Task {
+    public Todo(String description) {
+        super(description);
+    }
+
+    @Override
+    public String toFileString() {
+        return "T | " + (isDone ? "1" : "0") + " | " + description;
+    }
+
+    @Override
+    public String toString() {
+        return "[T]" + super.toString();
+    }
+}
+
+ class Deadline extends Task {
+    protected String by;
+
+    public Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+    }
+
+    @Override
+    public String toFileString() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+    }
+
+    @Override
+    public String toString() {
+        return "[D]" + super.toString() + " (by: " + by + ")";
+    }
+}
+
+ class Event extends Task {
     private String from;
     private String to;
 
@@ -81,21 +120,5 @@ class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
-    }
-}
-
-class Todo extends Task {
-    public Todo(String description) {
-        super(description);
-    }
-
-    @Override
-    public String toFileString() {
-        return "T | " + (isDone ? "1" : "0") + " | " + description;
-    }
-
-    @Override
-    public String toString() {
-        return "[T]" + super.toString();
     }
 }

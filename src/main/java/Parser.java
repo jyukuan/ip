@@ -36,6 +36,12 @@ public class Parser {
             if (parts.length < 2) throw new DukeException("Please specify the task number to unmark.");
             return new MarkCommand(parts[1].trim(), false);
 
+        case "find":
+            if (parts.length < 2) {
+                throw new DukeException("Please specify a keyword to search for.");
+            }
+            return new FindCommand(parts[1].trim());
+
         default:
             throw new DukeException("I'm sorry, but I don't know what that means.");
         }
