@@ -2,11 +2,19 @@ import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Main class for running the chatbot.
+ */
+
 public class Duke {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
-
+    /**
+     * Constructs an instance with the specified file path for storage.
+     *
+     * @param filePath The file path where tasks are stored.
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -20,6 +28,9 @@ public class Duke {
         tasks = new TaskList(taskList);
     }
 
+    /**
+     * Runs the chatbot program, handling user commands.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -36,6 +47,11 @@ public class Duke {
         ui.close();
     }
 
+    /**
+     * The main method to start the chatbot.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         new Duke("data/tasks.txt").run();
     }

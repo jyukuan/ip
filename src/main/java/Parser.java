@@ -1,4 +1,14 @@
+/**
+ * Parses user input and returns the corresponding command.
+ */
 public class Parser {
+    /**
+     * Parses the user command and returns the appropriate Command object.
+     *
+     * @param fullCommand The full user input command.
+     * @return The corresponding Command object.
+     * @throws DukeException If the command is invalid or improperly formatted.
+     */
     public static Command parse(String fullCommand) throws DukeException {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0].toLowerCase();
