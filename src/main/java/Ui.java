@@ -110,7 +110,7 @@ public class Ui {
                 System.out.println((i + 1) + ". " + tasks.get(i));
             }
         }
-        System.out.println("____________________________________________________________");
+        System.out.println("_____________________________________________________________");
     }
 
     public void close() {
