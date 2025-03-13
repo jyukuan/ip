@@ -101,7 +101,7 @@ public class Ui {
      * @param tasks List of matching tasks found by search.
      */
     public void showMatchingTasks(List<Task> tasks) {
-        System.out.println("____________________________________________________________");
+        System.out.println("_____________________________________________________________");
         if (tasks.isEmpty()) {
             System.out.println("No matching tasks found.");
         } else {
