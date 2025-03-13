@@ -27,7 +27,12 @@ public class Storage {
      * @throws IOException If an I/O error occurs while reading the file.
      */
     public List<Task> load() throws IOException {
-        if (!Files.exists(filePath)) return new ArrayList<>();
+        if (!Files.exists(filePath)) {
+            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
+            return new ArrayList<>();
+        }
+
         List<String> lines = Files.readAllLines(filePath);
         List<Task> tasks = new ArrayList<>();
         for (String line : lines) {
@@ -40,17 +45,29 @@ public class Storage {
         return tasks;
     }
 
+
     /**
      * Saves tasks from input to the storage file.
      *
      * @param tasks The list of tasks to be saved.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
+
     public void save(List<Task> tasks) throws IOException {
+        if (!Files.exists(filePath.getParent())) {
+            Files.createDirectories(filePath.getParent());
+        }
+
+        if (!Files.exists(filePath)) {
+            Files.createFile(filePath);
+        }
+
         List<String> lines = new ArrayList<>();
         for (Task task : tasks) {
             lines.add(task.toFileString());
         }
+
         Files.write(filePath, lines);
     }
 }
+

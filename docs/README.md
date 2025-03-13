@@ -16,19 +16,28 @@
 ---
 
 ##  **Core Features**
+## Add Tasks
 
-###  **Add Tasks**
-| Task Type  | Command Format                           | Example                                   |
-|------------|------------------------------------------|-------------------------------------------|
-| **Todo**   | `todo <description>`                     | `todo Buy groceries`                     |
-| **Deadline** | `deadline <description> /by <time>`      | `deadline Submit report /by 2023-12-31`  |
-| **Event**  | `event <description> /from <start> /to <end>` | `event Conference /from 9am /to 5pm` |
+You can add different types of tasks using the following command formats:
 
-**The description of tasks should not be empty.**
+### 1. Todo Task
+- **Format:** `todo <description>`
+- **Example:** `todo Buy groceries`\
+  ***The description of tasks should not be empty.***
 
-***Deadline tasks require a /by <time> clause.***
+### 2. Deadline Task
+- **Format:** `deadline <description> /by <time>`
+- **Example:** `deadline Submit report /by 2023-12-31`\
+  ***Deadline tasks require a /by <time> clause.***
 
-***Event tasks must have both /from <start> and /to <end> clauses***
+
+### 3. Event Task
+- **Format:** `event <description> /from <start> /to <end>`
+- **Example:** `event Conference /from 9am /to 5pm`\
+  ***Event tasks must have both /from <start> and /to <end> clauses***
+
+
+***Use these commands to efficiently add, manage, and track your tasks.***
 
 ---
 
