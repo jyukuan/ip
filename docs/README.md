@@ -21,20 +21,20 @@
 You can add different types of tasks using the following command formats:
 
 ### 1. Todo Task
-- **The description of tasks should not be empty.**
+- The description of tasks should not be empty.
 - **Format:** `todo <description>`
 - **Example:** `todo Buy groceries`
   
 
 ### 2. Deadline Task
-- **Deadline tasks require a by <time> clause.**
+- Deadline tasks require a by <time> clause.
 - **Format:** `deadline <description> /by <time>`
 - **Example:** `deadline Submit report /by 2023-12-31`
   
 
 
 ### 3. Event Task
-- **Event tasks must have both /from <start> and /to <end> clauses**
+- Event tasks must have both /from <start> and /to <end> clauses
 - **Format:** `event <description> /from <start> /to <end>`
 - **Example:** `event Conference /from 9am /to 5pm`
 
