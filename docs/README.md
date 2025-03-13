@@ -45,7 +45,7 @@ You can add different types of tasks using the following command formats:
 
 ###  **View All Tasks**
 - **List all tasks**:\
-  ***Displays all tasks in order.***
+  **Displays all tasks in order.**
   ```bash
   list
   1. [T][ ] Buy groceries
