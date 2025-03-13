@@ -98,6 +98,7 @@ DeepSeeker provides detailed error messages to guide users in entering commands 
 
 ### **Common Error Messages**
 Error Type : Displayed Error Message 
+
 **Missing Todo Description**  `Error: The description of a todo cannot be empty.` 
 
 **Missing Deadline Time**  `Error: Invalid deadline format. Use: deadline <desc> /by <time>` 
