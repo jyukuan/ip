@@ -46,7 +46,9 @@ You can add different types of tasks using the following command formats:
 ###  **View All Tasks**
 - **List all tasks**:\
   **Displays all tasks in order.**
+  
   Example:
+  
   list
   1. [T][ ] Buy groceries
   2. [D][ ] Submit report (by: 2023-12-31)
