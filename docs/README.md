@@ -23,6 +23,7 @@
 | **Todo**   | `todo <description>`                     | `todo Buy groceries`                     |
 | **Deadline** | `deadline <description> /by <time>`      | `deadline Submit report /by 2023-12-31`  |
 | **Event**  | `event <description> /from <start> /to <end>` | `event Conference /from 9am /to 5pm` |
+
 **The description of tasks should not be empty.**
 
 ***Deadline tasks require a /by <time> clause.***
@@ -39,7 +40,7 @@
   1. [T][ ] Buy groceries
   2. [D][ ] Submit report (by: 2023-12-31)
   3. [E][ ] Conference (from: 9am to: 5pm)
-
+  ```
 - **Mark/Unmark Tasks**:
   1. ***Mark as done***： 
       ```bash
