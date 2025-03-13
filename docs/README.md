@@ -115,6 +115,7 @@ Error Type : Displayed Error Message
 
 **Unknown Command**  `Error: I'm sorry, but I don't know what that means.` 
 
+
 ---
 
 ## Auto-Save
