@@ -29,29 +29,40 @@ public class Parser {
             }
             return new AddCommand(new Todo(parts[1].trim()));
         case "deadline":
-            if (parts.length < 2) throw new DukeException("Deadline description cannot be empty!");
+            if (parts.length < 2) {
+                throw new DukeException("Deadline description and date cannot be empty!");
+            }
             String[] deadlineParts = parts[1].split("/by", 2);
-            if (deadlineParts.length < 2) throw new DukeException("Invalid deadline format. Use: deadline <desc> /by <time>");
+            if (deadlineParts.length < 2 || deadlineParts[1].trim().isEmpty()) {
+                throw new DukeException("Invalid deadline format. Use: deadline <desc> /by <time>");
+            }
+            if (deadlineParts[0].trim().isEmpty()) {
+                throw new DukeException("The description of a deadline cannot be empty.");
+            }
             return new AddCommand(new Deadline(deadlineParts[0].trim(), deadlineParts[1].trim()));
         case "event":
-            if (parts.length < 2) throw new DukeException("Event description cannot be empty!");
+            if (parts.length < 2) {
+                throw new DukeException("Event description and time cannot be empty!");
+            }
             String[] eventParts = parts[1].split("/from|/to", 3);
-            if (eventParts.length < 3) throw new DukeException("Invalid event format. Use: event <desc> /from <time> /to <time>");
+            if (eventParts.length < 3 || eventParts[1].trim().isEmpty() || eventParts[2].trim().isEmpty()) {
+                throw new DukeException("Invalid event format. Use: event <desc> /from <time> /to <time>");
+            }
+            if (eventParts[0].trim().isEmpty()) {
+                throw new DukeException("The description of an event cannot be empty.");
+            }
             return new AddCommand(new Event(eventParts[0].trim(), eventParts[1].trim(), eventParts[2].trim()));
         case "mark":
             if (parts.length < 2) throw new DukeException("Please specify the task number to mark.");
             return new MarkCommand(parts[1].trim(), true);
-
         case "unmark":
             if (parts.length < 2) throw new DukeException("Please specify the task number to unmark.");
             return new MarkCommand(parts[1].trim(), false);
-
         case "find":
             if (parts.length < 2) {
                 throw new DukeException("Please specify a keyword to search for.");
             }
             return new FindCommand(parts[1].trim());
-
         default:
             throw new DukeException("I'm sorry, but I don't know what that means.");
         }
