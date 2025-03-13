@@ -97,16 +97,15 @@ You can add different types of tasks using the following command formats:
 DeepSeeker provides detailed error messages to guide users in entering commands correctly and fixing errors quickly.
 
 ### **Common Error Messages**
-| Error Type | Displayed Error Message |
-|------------|------------------------------------------------|
-| **Missing Todo Description** | `Error: The description of a todo cannot be empty.` |
-| **Missing Deadline Time** | `Error: Invalid deadline format. Use: deadline <desc> /by <time>` |
-| **Missing Event Time Range** | `Error: Invalid event format. Use: event <desc> /from <start> /to <end>` |
-| **Invalid Task Index** | `Error: Task index out of bounds.` |
-| **Task Index Format Error** | `Error: Invalid task index. Please provide a valid number.` |
-| **Deleting Task Without Specifying Index** | `Error: Please specify the task number to delete.` |
-| **Finding Tasks Without a Keyword** | `Error: Please specify a keyword to search for.` |
-| **Unknown Command** | `Error: I'm sorry, but I don't know what that means.` |
+Error Type | Displayed Error Message 
+**Missing Todo Description**  `Error: The description of a todo cannot be empty.` 
+**Missing Deadline Time**  `Error: Invalid deadline format. Use: deadline <desc> /by <time>` 
+**Missing Event Time Range**  `Error: Invalid event format. Use: event <desc> /from <start> /to <end>` 
+**Invalid Task Index**  `Error: Task index out of bounds.` 
+**Task Index Format Error**  `Error: Invalid task index. Please provide a valid number.` 
+**Deleting Task Without Specifying Index**  `Error: Please specify the task number to delete.` 
+**Finding Tasks Without a Keyword**  `Error: Please specify a keyword to search for.` 
+**Unknown Command**  `Error: I'm sorry, but I don't know what that means.` 
 
 ---
 
