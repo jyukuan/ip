@@ -71,7 +71,7 @@ public class TaskList {
     /**
      * Finds tasks containing the specified keyword in their description.
      *
-     * @param keyword The search term to match.
+     * @param keyword The search terms to match.
      * @return List of matching tasks.
      */
     public List<Task> findTasks(String keyword) {
