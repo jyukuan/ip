@@ -87,6 +87,7 @@ You can add different types of tasks using the following command formats:
      ```bash
      bye
      ```
+     
 # Important notes
 
 ## Task Indexing
