@@ -49,10 +49,13 @@ You can add different types of tasks using the following command formats:
   
   Example:
   
+  ```
   list
   1. [T][ ] Buy groceries
   2. [D][ ] Submit report (by: 2023-12-31)
   3. [E][ ] Conference (from: 9am to: 5pm)
+  ```
+  
 - **Mark/Unmark Tasks**:
   1. ***Mark as done***： 
       ```bash
